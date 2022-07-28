@@ -20,25 +20,25 @@
     height: 1000px; */
 }
 
-.cellUnknown {
+.unknown {
     background-color: aliceblue;
 }
 
-.cellBlank {
-    background-color: gray;
+.blank {
+    background-color: rgb(179, 175, 175);
 }
 
-.cellFilled {
+.filled {
     background-color: greenyellow;
 }
 
-/* .cellWrong {
-    outline-style: solid;
-    outline-color: red;
-    outline-width: 4px;
-    max-width: auto;
-    max-height: auto;
-} */
+.wrong {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: red;
+}
 
 table {
     /* table-layout: fixed; */

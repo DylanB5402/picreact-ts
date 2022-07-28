@@ -1,9 +1,9 @@
 enum CellStatus {
-    Unknown,
-    Blank,
-    Filled,
-    BlankWrong,
-    FilledWrong
+    Unknown = 'unknown',
+    Blank = 'blank',
+    Filled = 'filled',
+    BlankWrong = 'blank wrong',
+    FilledWrong = 'filled wrong'
 }
 
 export default CellStatus;

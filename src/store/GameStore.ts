@@ -14,7 +14,7 @@ export default class GameStore {
         for (var row : number = 0; row < numRows; row++) {
             board[row] = []
             for (var col : number = 0; col < numCols; col++) {
-                board[row][col] = CellStatus.Blank;
+                board[row][col] = CellStatus.Unknown;
             }
         }
         return board;
@@ -24,7 +24,7 @@ export default class GameStore {
     boardHeight : number = 5;
 
     @observable 
-    boardWidth = 4;
+    boardWidth = 5;
 
     @observable
     visualBoardStatus : CellStatus[][] = this.generateBlankBoardState();
