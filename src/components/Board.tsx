@@ -4,6 +4,7 @@ import GameContext from "../store/GameContext";
 import GameStore from "../store/GameStore";
 import BoardRow from "./BoardRow";
 import './Board.css'
+import TopHintRow from "./TopHintRow";
 
 
 const Board = () => {
@@ -24,6 +25,7 @@ const Board = () => {
     return (
         <table id="board">
             <tbody>
+                <TopHintRow />
                 {rows()}
             </tbody>
         </table>

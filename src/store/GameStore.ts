@@ -38,10 +38,10 @@ export default class GameStore {
     };
     
     @observable 
-    boardHeight : number = 5;
+    boardHeight : number = 10;
 
     @observable 
-    boardWidth : number = 5;
+    boardWidth : number = 10;
 
     @observable
     visualBoardStatus : CellStatus[][] = this.generateBoard( () => CellStatus.Unknown);
@@ -99,6 +99,7 @@ export default class GameStore {
     }
     
 
+
     generateHint = (statuses : CellStatus[]) => {
         const nums = statuses.map( (s : CellStatus) => {
             if (s === CellStatus.Blank) {
@@ -109,6 +110,30 @@ export default class GameStore {
         })
         const numStrings = nums.toString().replaceAll(',', '').split('0').filter( (x) => x !== '')
         return numStrings.map((x : string) => x.length)
+    }
+
+    getColumnHints = () => {
+        const hints : number[][] = []
+        for (var i = 0; i < this.boardWidth; i++) {
+            hints.push(this.getColumnHint(i));
+        }
+        return hints;
+    }
+
+    getColumnHint = (col : number) => {
+        const statuses : CellStatus[] = [];
+        for (var r = 0; r < this.boardHeight; r++) {
+            statuses.push(this.trueBoardStatus[r][col]);
+        }
+        // const nums = statuses.map( (s : CellStatus) => {
+        //     if (s === CellStatus.Blank) {
+        //         return 0;
+        //     } else {
+        //         return 1;
+        //     }
+        // })
+        // console.log(nums)
+        return this.generateHint(statuses);
     }
 
 

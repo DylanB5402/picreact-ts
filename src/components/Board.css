@@ -16,8 +16,6 @@
     margin: auto;
     border-collapse: collapse;
     margin-top: 20px;
-    /* width: 1000px;
-    height: 1000px; */
 }
 
 .unknown {
@@ -57,4 +55,10 @@
 .hintLeft {
     text-align: center;
     padding: 10px;
+    width: 100px
+}
+
+.hintTop {
+    text-align: center;
+    height: 150px;    
 }
