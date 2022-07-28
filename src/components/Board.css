@@ -1,0 +1,51 @@
+
+
+.cell {
+    border: 1px solid black;
+    padding: 0%;
+    width: auto;
+    white-space: nowrap;
+    width: 100px;
+    height: 100px
+    /* height: fit-content;
+    width: fit-content; */
+    
+}
+
+#board {
+    margin: auto;
+    border-collapse: collapse;
+    margin-top: 20px;
+    /* width: 1000px;
+    height: 1000px; */
+}
+
+.cellUnknown {
+    background-color: aliceblue;
+}
+
+.cellBlank {
+    background-color: gray;
+}
+
+.cellFilled {
+    background-color: greenyellow;
+}
+
+/* .cellWrong {
+    outline-style: solid;
+    outline-color: red;
+    outline-width: 4px;
+    max-width: auto;
+    max-height: auto;
+} */
+
+table {
+    /* table-layout: fixed; */
+}
+
+#newGame {
+    margin: auto;
+    display:flex;
+    margin-top: 20px;
+}

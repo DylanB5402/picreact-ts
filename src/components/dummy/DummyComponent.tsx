@@ -6,10 +6,8 @@ import GameStore from "../../store/GameStore";
 const DummyComponent = () => {
     const gameStore : GameStore | null = useContext(GameContext);
 
-    
     const onButtonClick = () => {
         gameStore?.setBoardHeight(gameStore?.boardHeight + 1);
-        console.log(gameStore);
     }
     return (
         <>
