@@ -38,7 +38,8 @@ const BoardCell = ({row, col} : BoardCellProps) => {
 
     const onClick = (event: BaseSyntheticEvent) => {
         event.preventDefault();
-        if (gameStore?.gameOver) {
+        event.stopPropagation();
+        if (gameStore?.gameOver || clicked) {
             return;
         }
         const nativeEvent : PointerEvent = event.nativeEvent as PointerEvent;

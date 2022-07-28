@@ -16,6 +16,10 @@
     margin: auto;
     border-collapse: collapse;
     margin-top: 20px;
+    -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
 }
 
 .unknown {
