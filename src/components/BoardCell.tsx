@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { BaseSyntheticEvent, MouseEventHandler, SyntheticEvent, useContext } from "react";
+import { BaseSyntheticEvent, MouseEventHandler, SyntheticEvent, useContext, useState } from "react";
 import CellStatus from "../CellStatus";
 import GameContext from "../store/GameContext";
 import GameStore from "../store/GameStore";
@@ -14,8 +14,22 @@ const BoardCell = ({row, col} : BoardCellProps) => {
     const gameStore : GameStore | null = useContext(GameContext);
     const trueCellStatus : CellStatus = gameStore?.trueBoardStatus[row][col] as CellStatus;
     const visualStatus : CellStatus = gameStore?.visualBoardStatus[row][col] as CellStatus;
+    
+    const [clicked, setClicked] = useState(false);
+
+    if (visualStatus === CellStatus.Unknown && clicked) {
+        setClicked(false);
+    }
 
     const setVisualCellStatus = (s : CellStatus) => gameStore?.setVisualCellStatus(s, row, col);
+
+    if (gameStore?.gameOver) {
+        if (trueCellStatus === CellStatus.Filled) {
+            setVisualCellStatus(CellStatus.Over);
+        } else if (visualStatus === CellStatus.Unknown) {
+            setVisualCellStatus(trueCellStatus);
+        }
+    }
 
     var x = '';
     if (visualStatus === CellStatus.BlankWrong || visualStatus == CellStatus.FilledWrong) {
@@ -30,11 +44,15 @@ const BoardCell = ({row, col} : BoardCellProps) => {
         } else if (nativeEvent.button === 0 ) {
             onLeftClick();
         }
+        setClicked(true);
     }
 
     const onLeftClick = () => {
         if (trueCellStatus === CellStatus.Filled) {
             setVisualCellStatus(CellStatus.Filled);
+            if (!clicked) {
+                gameStore?.incrementNumClickedFilledCells();
+            }
         } else if (trueCellStatus === CellStatus.Blank) {
             setVisualCellStatus(CellStatus.BlankWrong);
         }

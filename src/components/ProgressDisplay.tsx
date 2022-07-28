@@ -9,7 +9,8 @@ const ProgressDisplay = () => {
     return (
         
         <div id="progress">
-            <p>{gameStore?.boardHeight}</p>
+            <p>Filled {gameStore?.numClickedFilledCells} cells </p>
+            <p> Out of {gameStore?.numFilledCells} cells </p>
         </div>
     )
 }

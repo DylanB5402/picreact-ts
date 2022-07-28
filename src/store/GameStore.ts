@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import CellStatus from "../CellStatus";
 
 export default class GameStore {
@@ -6,19 +6,6 @@ export default class GameStore {
     constructor() {
         makeObservable(this);
         this.resetBoard();
-    }
-
-    generateBlankBoardState = () => {
-        const numCols = this.boardWidth as number;
-        const numRows = this.boardHeight as number;
-        const board : CellStatus[][] = []
-        for (var row : number = 0; row < numRows; row++) {
-            board[row] = []
-            for (var col : number = 0; col < numCols; col++) {
-                board[row][col] = CellStatus.Unknown;
-            }
-        }
-        return board;
     }
 
     generateBoard = (generateStatus: () => CellStatus) => {
@@ -33,18 +20,27 @@ export default class GameStore {
         }
         return board;
     }
+
+    generateRandomCell = () => {
+        var status : CellStatus;
+        if (Math.random() >= 0.5) {
+            status = CellStatus.Blank;
+        } else {
+            status = CellStatus.Filled;
+            this.numFilledCells += 1;
+        }
+        return status;
+    }
+
+    generateRandomBoard = () => {
+        this.trueBoardStatus = this.generateBoard(this.generateRandomCell)
+    };
     
     @observable 
     boardHeight : number = 5;
 
     @observable 
     boardWidth : number = 5;
-
-    // @observable
-    // visualBoardStatus : CellStatus[][] = this.generateBlankBoardState();
-
-    // @observable
-    // trueBoardStatus : CellStatus[][] = this.generateBlankBoardState();
 
     @observable
     visualBoardStatus : CellStatus[][] = this.generateBoard( () => CellStatus.Unknown);
@@ -56,7 +52,7 @@ export default class GameStore {
     numFilledCells : number = 0;
 
     @observable
-    numClickedCells : number = 0;
+    numClickedFilledCells : number = 0;
 
     @action 
     setBoardHeight = (height : number) => {
@@ -75,28 +71,28 @@ export default class GameStore {
 
     @action 
     setVisualBoardUnknown = () => {
-        this.visualBoardStatus = this.generateBlankBoardState();
+        this.visualBoardStatus = this.generateBoard( () => CellStatus.Unknown);
     }
 
     @action
     resetBoard = () => {
+        this.numFilledCells = 0;
+        this.numClickedFilledCells = 0;
         this.generateRandomBoard();
         this.setVisualBoardUnknown();
     }
 
-    generateRandomCell = () => {
-        var status : CellStatus;
-        if (Math.random() >= 0.5) {
-            status = CellStatus.Blank;
-        } else {
-            status = CellStatus.Filled;
-        }
-        return status;
+    @action
+    incrementNumClickedFilledCells = () => {
+        this.numClickedFilledCells += 1;
     }
 
-    generateRandomBoard = () => {
-        this.trueBoardStatus = this.generateBoard(this.generateRandomCell)
-    };
+    @computed
+    get gameOver() {
+        return this.numClickedFilledCells === this.numFilledCells;
+    }
+
+    
     
 
     

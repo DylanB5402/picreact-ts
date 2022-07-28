@@ -32,6 +32,10 @@
     background-color: greenyellow;
 }
 
+.over {
+    background-color: aqua;
+}
+
 .wrong {
     text-align: center;
     align-items: center;
