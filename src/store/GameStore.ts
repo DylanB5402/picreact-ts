@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import { action, computed, makeObservable, observable } from "mobx";
 import CellStatus from "../CellStatus";
 
@@ -92,7 +93,25 @@ export default class GameStore {
         return this.numClickedFilledCells === this.numFilledCells;
     }
 
+   
+    getRowHint = (row: number) => {
+        return this.generateHint(this.trueBoardStatus[row]);
+    }
     
+
+    generateHint = (statuses : CellStatus[]) => {
+        const nums = statuses.map( (s : CellStatus) => {
+            if (s === CellStatus.Blank) {
+                return 0;
+            } else {
+                return 1;
+            }
+        })
+        const numStrings = nums.toString().replaceAll(',', '').split('0').filter( (x) => x !== '')
+        return numStrings.map((x : string) => x.length)
+    }
+
+
     
 
     

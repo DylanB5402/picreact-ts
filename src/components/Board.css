@@ -53,3 +53,8 @@
 #progress {
     text-align: center;
 }
+
+.hintLeft {
+    text-align: center;
+    padding: 10px;
+}

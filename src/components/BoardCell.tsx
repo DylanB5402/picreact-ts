@@ -38,6 +38,9 @@ const BoardCell = ({row, col} : BoardCellProps) => {
 
     const onClick = (event: BaseSyntheticEvent) => {
         event.preventDefault();
+        if (gameStore?.gameOver) {
+            return;
+        }
         const nativeEvent : PointerEvent = event.nativeEvent as PointerEvent;
         if (nativeEvent.button === 2 || nativeEvent.shiftKey) {
             onRightClick();

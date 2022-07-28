@@ -7,7 +7,6 @@ const ProgressDisplay = () => {
     const gameStore : GameStore | null = useContext(GameContext);
 
     return (
-        
         <div id="progress">
             <p>Filled {gameStore?.numClickedFilledCells} cells </p>
             <p> Out of {gameStore?.numFilledCells} cells </p>
