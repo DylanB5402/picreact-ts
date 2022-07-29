@@ -11,9 +11,15 @@ const TopHintRow = () => {
 
     topHints.forEach( (hint) => {
         const hintRows : ReactElement[] = [];
-        hint.forEach( (h) => hintRows.push( <p> {h} </p>))
-        hints.push( <td className="hintTop"> {hintRows} </td>)
-        
+        hint.forEach( (h) => hintRows.push( <p key={`${Math.random()}`}> {h} </p>))
+        hints.push(
+            <td 
+                className="hintTop"
+                key={`${Math.random()}`}
+            > 
+                {hintRows} 
+            </td>
+        )
     })
 
     return (

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { SyntheticEvent, useContext } from "react";
 import GameContext from "../store/GameContext";
 import GameStore from "../store/GameStore";
 import BoardRow from "./BoardRow";
@@ -22,8 +22,14 @@ const Board = () => {
         }
         return boardRows;
     }
+    
+    
+
     return (
-        <table id="board">
+        <table 
+            id="board"
+                
+        >
             <tbody>
                 <TopHintRow />
                 {rows()}

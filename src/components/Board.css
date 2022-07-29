@@ -40,6 +40,10 @@
     background-color: aqua;
 }
 
+.selected {
+    background-color: cornsilk;
+}
+
 .wrong {
     text-align: center;
     align-items: center;

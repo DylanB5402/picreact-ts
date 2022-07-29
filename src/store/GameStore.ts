@@ -1,5 +1,4 @@
-import { stat } from "fs";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, toJS } from "mobx";
 import CellStatus from "../CellStatus";
 
 export default class GameStore {
@@ -55,6 +54,42 @@ export default class GameStore {
     @observable
     numClickedFilledCells : number = 0;
 
+    @observable
+    numMistakes = 0;
+
+    
+
+    makeEmptySelectedCells = () => {
+        const arr : boolean[][] = [];
+        const numCols = this.boardWidth as number;
+        const numRows = this.boardHeight as number;
+        for (var row : number = 0; row < numRows; row++) {
+            arr[row] = [];
+            for (var col : number = 0; col < numCols; col++) {
+                arr[row][col] = false;
+            }
+        }
+        return arr;
+    }
+
+    @observable
+    selectedCells : boolean[][] = this.makeEmptySelectedCells();
+
+    
+
+    @observable
+    isLeftClick : boolean = false;
+
+    @observable
+    isRightClick : boolean = false;
+
+    @action
+    setClicks = (left : boolean, right : boolean) => {
+        this.isLeftClick = left;
+        this.isRightClick = right;
+        
+    }
+
     @action 
     setBoardHeight = (height : number) => {
         this.boardHeight = height;
@@ -81,6 +116,14 @@ export default class GameStore {
         this.numClickedFilledCells = 0;
         this.generateRandomBoard();
         this.setVisualBoardUnknown();
+        const numCols = this.boardWidth as number;
+        const numRows = this.boardHeight as number;
+        for (var row : number = 0; row < numRows; row++) {
+            this.selectedCells[row] = [];
+            for (var col : number = 0; col < numCols; col++) {
+                this.selectedCells[row][col] = false;
+            }
+        }
     }
 
     @action
@@ -88,18 +131,60 @@ export default class GameStore {
         this.numClickedFilledCells += 1;
     }
 
+    @action
+    setSelected = (selected : boolean, row : number, col : number) => {
+        if (!this.gameOver) {
+            this.selectedCells[row][col] = selected;
+        }
+    }
+
+    @action
+    checkAllSelected = () => {
+        if (this.gameOver) {
+            return;
+        }
+        const numCols = this.boardWidth as number;
+        const numRows = this.boardHeight as number;
+        for (var row : number = 0; row < numRows; row++) {
+            for (var col : number = 0; col < numCols; col++) {
+                if (this.selectedCells[row][col]) {
+                    this.checkCell(row, col);
+                    this.selectedCells[row][col] = false;
+                }
+            }
+        }
+    }
+
+    @action
+    checkCell = (row : number, col : number) => {
+        const setVisualCellStatus = (s : CellStatus) => this.setVisualCellStatus(s, row, col);
+        const trueCellStatus = this.trueBoardStatus[row][col];
+        if (this.isLeftClick) {
+            if (trueCellStatus === CellStatus.Filled) {
+                setVisualCellStatus(CellStatus.Filled);
+                this.incrementNumClickedFilledCells();
+            } else if (trueCellStatus === CellStatus.Blank) {
+                setVisualCellStatus(CellStatus.BlankWrong);
+            }
+        } else if (this.isRightClick) {
+            if (trueCellStatus === CellStatus.Blank) {
+                setVisualCellStatus(CellStatus.Blank);
+            } else if (trueCellStatus === CellStatus.Filled) {
+                setVisualCellStatus(CellStatus.FilledWrong);
+                this.incrementNumClickedFilledCells();
+            }
+        }
+    }
+
     @computed
     get gameOver() {
         return this.numClickedFilledCells === this.numFilledCells;
     }
 
-   
     getRowHint = (row: number) => {
         return this.generateHint(this.trueBoardStatus[row]);
     }
     
-
-
     generateHint = (statuses : CellStatus[]) => {
         const nums = statuses.map( (s : CellStatus) => {
             if (s === CellStatus.Blank) {
@@ -125,14 +210,6 @@ export default class GameStore {
         for (var r = 0; r < this.boardHeight; r++) {
             statuses.push(this.trueBoardStatus[r][col]);
         }
-        // const nums = statuses.map( (s : CellStatus) => {
-        //     if (s === CellStatus.Blank) {
-        //         return 0;
-        //     } else {
-        //         return 1;
-        //     }
-        // })
-        // console.log(nums)
         return this.generateHint(statuses);
     }
 

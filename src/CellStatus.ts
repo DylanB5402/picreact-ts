@@ -4,7 +4,9 @@ enum CellStatus {
     Filled = 'filled',
     BlankWrong = 'blank wrong',
     FilledWrong = 'filled wrong',
-    Over = 'over'
+    Over = 'over',
+    Selected = 'selected',
+    OverWrong = 'over wrong'
 }
 
 export default CellStatus;
