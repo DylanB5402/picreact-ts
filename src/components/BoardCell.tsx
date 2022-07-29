@@ -67,6 +67,9 @@ const BoardCell = ({row, col} : BoardCellProps) => {
             setVisualCellStatus(CellStatus.Blank);
         } else if (trueCellStatus === CellStatus.Filled) {
             setVisualCellStatus(CellStatus.FilledWrong);
+            if (!clicked) {
+                gameStore?.incrementNumClickedFilledCells();
+            }
         }
     }
 
