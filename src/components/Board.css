@@ -1,15 +1,18 @@
-
-
 .cell {
     border: 1px solid black;
     padding: 0%;
     width: auto;
     white-space: nowrap;
-    width: 4em;
-    height: 4em;
-    /* height: fit-content;
-    width: fit-content; */
-    
+    width: 3.5em;
+    height: 3.5em;
+}
+
+.verticalDivider {
+    border-left: 5px solid rgb(7, 112, 153);
+}
+
+.horizontalDivider {
+    border-top: 5px solid rgb(7, 112, 153);
 }
 
 #board {
@@ -20,8 +23,6 @@
     -moz-user-select: none;    
     -ms-user-select: none;      
     user-select: none;
-    /* height: 40em;
-    width: 40em; */
 }
 
 .unknown {

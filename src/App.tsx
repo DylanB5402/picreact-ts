@@ -1,12 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { SyntheticEvent, useContext } from "react";
+import { Col, Container, Row } from "reactstrap";
 import Board from "./components/Board";
-import GenerateBoardButton from "./components/GenerateBoardButton";
-import ProgressDisplay from "./components/ProgressDisplay";
 import GameContext from "./store/GameContext";
 import GameStore from "./store/GameStore";
-
-
 
 function App() {
   
@@ -20,8 +17,6 @@ function App() {
   return (
     <div onMouseUp={onMouseUp}>
       <Board />
-      <ProgressDisplay />
-      <GenerateBoardButton/>
     </div>
   );
 }

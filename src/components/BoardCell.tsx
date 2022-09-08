@@ -57,9 +57,20 @@ const BoardCell = ({row, col} : BoardCellProps) => {
         }
     }
 
+    let dividerStatusVertical = ''
+    let dividerStatusHorizontal
+
+    if (col === 5) {
+        dividerStatusVertical = 'verticalDivider';
+    }
+    
+    if (row === 5) {
+        dividerStatusHorizontal = 'horizontalDivider';
+    }
+
     return (
         <td 
-            className={`cell ${visualStatus}`}
+            className={`${visualStatus} ${dividerStatusHorizontal} ${dividerStatusVertical} cell`}
             onClick={onMouseEnter}
             onContextMenu={onMouseEnter}
             onMouseDown={onMouseEnter}

@@ -28,7 +28,6 @@ const Board = () => {
     return (
         <table 
             id="board"
-                
         >
             <tbody>
                 <TopHintRow />

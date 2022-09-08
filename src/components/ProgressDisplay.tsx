@@ -8,8 +8,8 @@ const ProgressDisplay = () => {
 
     return (
         <div id="progress">
-            <p>Filled {gameStore?.numClickedFilledCells} cells </p>
-            <p> Out of {gameStore?.numFilledCells} cells </p>
+            <p>Filled {gameStore?.numClickedFilledCells}</p>
+            <p> out of {gameStore?.numFilledCells} cells </p>
         </div>
     )
 }

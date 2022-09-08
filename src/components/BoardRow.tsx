@@ -28,7 +28,7 @@ const BoardRow = ( {rowNumber} : BoardRowProps ) => {
     return (
         <tr>
             <td className="hintLeft">
-                {gameStore?.getRowHint(rowNumber).toString().replaceAll(',', '    ')}
+                {gameStore?.getRowHint(rowNumber).toString().replaceAll(',', ' ')}
             </td>
             {row()}
         </tr>
